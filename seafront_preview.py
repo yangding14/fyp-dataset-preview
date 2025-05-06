@@ -38,7 +38,7 @@ class SeaFrontPreview:
         
         # Damage class mapping
         self.damage_classes = {
-            0: "background", 1: "container", 2: "axis", 3: "concave", 4: "dentado", 5: "perforation"
+            0: "container", 1: "axis", 2: "concave", 3: "dentado", 4: "perforation"
         }
         
         self.load_dataset()
@@ -247,15 +247,15 @@ class SeaFrontPreview:
                 # Create colored overlay for different classes
                 overlay = np.zeros((mask_np.shape[0], mask_np.shape[1], 4), dtype=np.uint8)
                 
-                # Container is class 1
-                container_mask = (mask_np == 1)
+                # Container is class 0
+                container_mask = (mask_np == 0)
                 overlay[container_mask] = [0, 255, 0, 100]  # Green with alpha
                 
                 # Damage classes have values ClassIdx*100+InstanceIdx
-                damage_types = {2: [255, 0, 0, 100],    # Axis - Red
-                               3: [0, 0, 255, 100],     # Concave - Blue
-                               4: [255, 255, 0, 100],   # Dentado - Yellow
-                               5: [255, 0, 255, 100]}   # Perforation - Magenta
+                damage_types = {1: [255, 0, 0, 100],    # Axis - Red
+                               2: [0, 0, 255, 100],     # Concave - Blue
+                               3: [255, 255, 0, 100],   # Dentado - Yellow
+                               4: [255, 0, 255, 100]}   # Perforation - Magenta
                 
                 for class_id, color in damage_types.items():
                     # Find all instances of this class (values starting with class_id*100)
